@@ -9,4 +9,16 @@ porem com os dados diferentes. */
 
     $data_nasc = $ano_atual-$idade;
     echo $nome, "Você nasceu em:", $data_nasc;
+
     ?>
+    
+    <?php
+    $exerc2= "Programação php";
+    echo "\nMinúsculo: ", $exerc2;
+    $exerc2= strtoupper(string: $exerc2);
+    echo "\nMinúsculo: ", $exerc2;
+    $exerc2= strtoupper(string: $exerc2);
+    echo "\nMinúsculo novamente: ", $exerc2;
+
+    ?>
+
