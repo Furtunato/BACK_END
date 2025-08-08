@@ -1,4 +1,17 @@
-    <?php
+   <?php
+    $nota1 = 8;
+    $nota2 = 9;
+    $media = ($nota1 + $nota2) / 2;
+
+    if ($media >= 7) {
+        echo "Aluno aprovado com media: $media e $presenca% de presença";
+    } else {
+        echo "Aluno reprovado com media: $media e $presenca% de presença";
+    }
+    ?>
+  
+  
+  <?php
     $nota1 = 8;
     $nota2 = 9;
     $presenca = 59;
@@ -25,3 +38,5 @@
     echo "Aluno reprovado com media: $media e $presenca% de presença";
 }
     ?>
+
+    
