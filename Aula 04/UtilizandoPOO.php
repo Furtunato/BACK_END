@@ -13,6 +13,14 @@ class carro {
         $this->revisao = $revisao;
         $this->N_Donos = $N_Donos;
     }
+
+    public function exibirInfo(): void {
+        echo "Marca: $this->marca - Modelo: $this->modelo - Ano: $this->ano\n";
+    }
+    public function ligar(): void {
+        echo "O carro $this->modelo esta ligado!\n";
+    }
+
 }
 $carro1 = new carro(marca: "Porsche", modelo: "911", ano: 2020, revisao: false, N_Donos: 3);
 $carro2 = new carro(marca: "BMW", modelo: "X6", ano: 2022, revisao: true, N_Donos: 1);
@@ -21,6 +29,9 @@ $carro4 = new carro(marca: "Lamborghini", modelo: "Aventador SVJ", ano: 2023, re
 $carro5 = new carro(marca: "Audi", modelo: "RS7", ano: 2019, revisao: true, N_Donos: 2);
 $carro6 = new carro(marca: "Ferrari", modelo: "Purosangue", ano: 2023, revisao: false, N_Donos: 1);
 
+
+$carro5->ligar();
+$carro5->exibirInfo();
 
 
 ?>

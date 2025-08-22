@@ -13,6 +13,14 @@ class cachorro {
         $this->castrado = $castrado;
         $this->sexo = $sexo;
     }
+
+    public function latir(): void {
+        echo "O cachorro $this->nome esta latindo!\n";
+    }
+
+    public function marcarterritorio(): void {
+        echo "O cachorro $this->nome da $this->raca esta marcando territorio!\n";
+    }
 }
 $cachorro1 = new cachorro(nome: "Maddox", idade: 3,raca: "Rottweiller", castrado: true, sexo: "Macho");
 $cachorro2 = new cachorro(nome: "Zeus", idade: 7,raca: "Doberman", castrado: true, sexo: "Macho");
@@ -25,6 +33,10 @@ $cachorro8 = new cachorro(nome: "Scherrer", idade: 8,raca: "Chihuahua", castrado
 $cachorro9 = new cachorro(nome: "Pingo", idade: 3,raca: "Pinscher", castrado: true, sexo: "Macho");
 $cachorro10 = new cachorro(nome: "Caramelo", idade: 3,raca: "Vira-lata", castrado: false, sexo: "Macho");
  
+
+$cachorro1->latir();
+$cachorro1->marcarterritorio()
+
 ?>
 
 <?php
@@ -49,6 +61,21 @@ class Usuario {
     $this->estado = $estado;
     $this->endereco = $endereco;
     $this->cep = $cep;
+    }
+
+    public function testandoreservista(): void {
+        if($this->sexo === "Masculino") {
+            echo "Apresente seu certificado de reservista do tiro de guera.\n";
+        } else {
+            echo "Tudo certo.\n";
+        }
+    }
+    public function casamento($anos_casados): void {
+    if($this->estado_civil === "Casado") { 
+        echo "Parabens pelo casamento de $anos_casados anos!\n";
+    } else {
+        echo "oloco.\n";
+        }
     }
 }
 $usuario1 = new Usuario(
@@ -86,3 +113,8 @@ $usuario3 = new Usuario(
     endereco: "Estrada 3, 33",
     cep: "12345-99"
 );
+
+$usuario3->testandoreservista();
+$usuario1->casamento(92)
+
+?>
