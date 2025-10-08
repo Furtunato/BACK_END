@@ -31,4 +31,17 @@ class Barco implements veiculo {
     echo "O Barco {$this->nome} esta navegando";
     }
 }
+
+$carro1 = new Carro ();
+$carro1->nome = "Astra";
+
+$carro2 = new Carro ();
+$carro2->nome = "Mercedes";
+
+
+$aviao1 = new Aviao ();
+$aviao1-> nome = "B2-Spirit";
+
+$aviao2 = new Aviao ();
+$aviao2-> nome = "F14";
 ?>

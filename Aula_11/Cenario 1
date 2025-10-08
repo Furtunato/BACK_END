@@ -1,0 +1,20 @@
+Exercícios para a extração de classes e métodos de cenários reais
+
+Cenário 1 – Viagem pelo Mundo
+Um grupo de turistas vai visitar o Japão, o Brasil e o Acre. Em cada lugar da
+Terra, eles poderão comer comidas típicas e nadar em rios ou praias.
+
+Substantivos: turistas, japão, brasil, acre, Terra, rios, praias
+Ações: visitar, comer, nadar
+
+Classes: Turistas, Localizações, lugares
+Metodos: visitar, comer, nadar
+
+Metodos para a classe Turistas:
+visitar, comer, nadar
+
+Metodos para a classe Localizações:
+visitar, comer
+
+Metodos para a classe lugares:
+nadar
