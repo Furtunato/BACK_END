@@ -1,0 +1,11 @@
+Modelo MVC para criação de softwares
+
+O que e o padrão MVC?
+    O padrão MVC é utilizado para o desenvolvimento limpo e organizado de aplicações.
+
+M ---> Model: Representa os dados e as regras do negocio. 
+    Exemplo: Aluno.php e AlunoDAO.php
+V ---> View: Cuida da parte grafica e interfaces com o usuario, ou seja, o que aparece na tela. 
+    Exemplo: index.php ou index.html
+C ---> Controller: É o intermediario entra a interface e os dados e regras de negocio. 
+    Exemplo: AlunoController.php
