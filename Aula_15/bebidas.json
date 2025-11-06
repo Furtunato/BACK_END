@@ -1,1 +1,9 @@
-[]
+{
+    "Guarana": {
+        "nome": "Guarana",
+        "categoria": "Refrigerante",
+        "volume": "1l",
+        "valor": "12",
+        "qtde": "100"
+    }
+}
