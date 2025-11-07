@@ -10,8 +10,6 @@ class BebidaDAO {
     private $arquivo = __DIR__ . "/../bebidas.json";
 
     public function __construct() {
-        // Força o PHP a verificar novamente o estado do arquivo
-        clearstatcache(true, $this->arquivo);
 
         if (file_exists($this->arquivo)) {
             $conteudo = file_get_contents($this->arquivo);
@@ -44,7 +42,8 @@ class BebidaDAO {
                 'qtde' => $bebida->getQtde(),
             ];
         }
-        file_put_contents($this->arquivo, json_encode($dados, JSON_PRETTY_PRINT));
+        file_put_contents($this->arquivo, json_encode($dados, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+);
     }
 
     public function criarBebida(Bebida $bebida) {
@@ -56,13 +55,16 @@ class BebidaDAO {
         return $this->bebidas;
     }
 
-    public function atualizarBebida($nome, $valor, $qtde) {
-        if (isset($this->bebidas[$nome])) {
-            $this->bebidas[$nome]->setValor($valor);
-            $this->bebidas[$nome]->setQtde($qtde);
-            $this->salvarEmArquivo();
-        }
+    public function atualizarBebida($nome, $novaCategoria, $novoVolume, $novoValor, $novaQtde) {
+    if (isset($this->bebidas[$nome])) {
+        $this->bebidas[$nome]->setCategoria($novaCategoria);
+        $this->bebidas[$nome]->setVolume($novoVolume);
+        $this->bebidas[$nome]->setValor($novoValor);
+        $this->bebidas[$nome]->setQtde($novaQtde);
+        $this->salvarEmArquivo();
     }
+    }
+
 
     public function excluirBebida($nome) {
         if (isset($this->bebidas[$nome])) {

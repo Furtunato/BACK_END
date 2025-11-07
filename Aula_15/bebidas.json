@@ -1,9 +1,16 @@
 {
-    "Guarana": {
-        "nome": "Guarana",
+    "das": {
+        "nome": "das",
         "categoria": "Refrigerante",
-        "volume": "1l",
-        "valor": "12",
-        "qtde": "100"
+        "volume": "água",
+        "valor": "2",
+        "qtde": "21"
+    },
+    "água": {
+        "nome": "água",
+        "categoria": "Refrigerante",
+        "volume": "dasd",
+        "valor": "2",
+        "qtde": "2"
     }
 }

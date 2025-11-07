@@ -1,16 +1,22 @@
 <?php
-require_once __DIR__ . '/../Controller/bebidaController.php';
-
+require_once __DIR__ . '/../Controller/BebidaController.php';
 use Controller\BebidaController;
 
 $controller = new BebidaController();
+$bebidaEditando = null;
 
-// Lógica das ações
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_POST['acao'] === 'criar') {
+    $acao = $_POST['acao'] ?? '';
+
+    if ($acao === 'criar') {
         $controller->criar($_POST['nome'], $_POST['categoria'], $_POST['volume'], $_POST['valor'], $_POST['qtde']);
-    } elseif ($_POST['acao'] === 'deletar') {
+    } elseif ($acao === 'deletar') {
         $controller->deletar($_POST['nome']);
+    } elseif ($acao === 'editar') {
+        $lista = $controller->ler();
+        $bebidaEditando = $lista[$_POST['nome']] ?? null;
+    } elseif ($acao === 'salvarEdicao') {
+        $controller->atualizar($_POST['nome'], $_POST['categoria'], $_POST['volume'], $_POST['valor'], $_POST['qtde']);
     }
 }
 
@@ -21,7 +27,7 @@ $lista = $controller->ler();
 <head>
     <meta charset="UTF-8">
     <title>Gerenciamento de Bebidas</title>
-    <style>
+    <!-- <style>
         body {
             font-family: "Segoe UI", Arial, sans-serif;
             background: #f4f6f8;
@@ -48,11 +54,6 @@ $lista = $controller->ler();
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        h2 {
-            margin-top: 40px;
-            color: #1e88e5;
-        }
-
         form {
             display: flex;
             flex-wrap: wrap;
@@ -60,7 +61,7 @@ $lista = $controller->ler();
             margin-bottom: 20px;
         }
 
-        form input, form select {
+        input, select {
             flex: 1 1 150px;
             padding: 10px;
             border: 1px solid #ccc;
@@ -79,9 +80,11 @@ $lista = $controller->ler();
             font-size: 14px;
         }
 
-        button:hover {
-            background: #1565c0;
-        }
+        button:hover { background: #1565c0; }
+        .delete-btn { background: #e53935; }
+        .delete-btn:hover { background: #b71c1c; }
+        .edit-btn { background: #fbc02d; color: black; }
+        .edit-btn:hover { background: #f9a825; }
 
         table {
             width: 100%;
@@ -89,71 +92,56 @@ $lista = $controller->ler();
             margin-top: 10px;
         }
 
-        table th, table td {
+        th, td {
             padding: 10px;
             border-bottom: 1px solid #ddd;
             text-align: center;
         }
 
-        table th {
-            background: #f0f0f0;
-        }
-
-        tr:hover {
-            background: #f9f9f9;
-        }
-
-        .delete-btn {
-            background: #e53935;
-        }
-
-        .delete-btn:hover {
-            background: #b71c1c;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            color: #777;
-            font-size: 13px;
-        }
-    </style>
+        th { background: #f0f0f0; }
+        tr:hover { background: #f9f9f9; }
+    </style> -->
 </head>
 <body>
 <header>🍾 Sistema de Gerenciamento de Bebidas</header>
 
 <main>
-    <h2>Cadastrar nova bebida</h2>
+    <h2><?= $bebidaEditando ? "Editar bebida" : "Cadastrar nova bebida" ?></h2>
     <form method="POST">
-        <input type="hidden" name="acao" value="criar">
-        <input type="text" name="nome" placeholder="Nome da bebida" required>
+        <input type="hidden" name="acao" value="<?= $bebidaEditando ? 'salvarEdicao' : 'criar' ?>">
+
+        <input type="text" name="nome" placeholder="Nome da bebida" 
+            value="<?= htmlspecialchars($bebidaEditando?->getNome() ?? '') ?>" 
+            <?= $bebidaEditando ? 'readonly' : 'required' ?>>
+
         <select name="categoria" required>
             <option value="">Categoria</option>
-            <option value="Refrigerante">Refrigerante</option>
-            <option value="Cerveja">Cerveja</option>
-            <option value="Vinho">Vinho</option>
-            <option value="Destilado">Destilado</option>
-            <option value="Água">Água</option>
-            <option value="Suco">Suco</option>
-            <option value="Energético">Energético</option>
+            <?php
+            $categorias = ["Refrigerante","Cerveja","Vinho","Destilado","Água","Suco","Energético"];
+            foreach ($categorias as $cat) {
+                $selected = ($bebidaEditando && $bebidaEditando->getCategoria() === $cat) ? 'selected' : '';
+                echo "<option value='$cat' $selected>$cat</option>";
+            }
+            ?>
         </select>
-        <input type="text" name="volume" placeholder="Volume (ex: 350ml)" required>
-        <input type="number" step="0.01" name="valor" placeholder="Valor (R$)" required>
-        <input type="number" name="qtde" placeholder="Quantidade" required>
-        <button type="submit">Cadastrar</button>
+
+        <input type="text" name="volume" placeholder="Volume (ex: 350ml)" 
+            value="<?= htmlspecialchars($bebidaEditando?->getVolume() ?? '') ?>" required>
+
+        <input type="number" step="0.01" name="valor" placeholder="Valor (R$)" 
+            value="<?= htmlspecialchars($bebidaEditando?->getValor() ?? '') ?>" required>
+
+        <input type="number" name="qtde" placeholder="Quantidade" 
+            value="<?= htmlspecialchars($bebidaEditando?->getQtde() ?? '') ?>" required>
+
+        <button type="submit"><?= $bebidaEditando ? 'Salvar alterações' : 'Cadastrar' ?></button>
     </form>
 
     <h2>Bebidas cadastradas</h2>
     <table>
         <tr>
-            <th>Nome</th>
-            <th>Categoria</th>
-            <th>Volume</th>
-            <th>Valor (R$)</th>
-            <th>Quantidade</th>
-            <th>Ações</th>
+            <th>Nome</th><th>Categoria</th><th>Volume</th><th>Valor (R$)</th><th>Quantidade</th><th>Ações</th>
         </tr>
-
         <?php if (empty($lista)): ?>
             <tr><td colspan="6">Nenhuma bebida cadastrada ainda.</td></tr>
         <?php else: ?>
@@ -165,6 +153,12 @@ $lista = $controller->ler();
                     <td><?= number_format($bebida->getValor(), 2, ',', '.') ?></td>
                     <td><?= htmlspecialchars($bebida->getQtde()) ?></td>
                     <td>
+                        <form method="POST" style="display:inline;">
+                            <input type="hidden" name="acao" value="editar">
+                            <input type="hidden" name="nome" value="<?= htmlspecialchars($bebida->getNome()) ?>">
+                            <button type="submit" class="edit-btn">Editar</button>
+                        </form>
+
                         <form method="POST" style="display:inline;">
                             <input type="hidden" name="acao" value="deletar">
                             <input type="hidden" name="nome" value="<?= htmlspecialchars($bebida->getNome()) ?>">
