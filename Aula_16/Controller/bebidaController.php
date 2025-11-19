@@ -1,11 +1,7 @@
 <?php
-namespace Controller;
 
 require_once __DIR__ . '/../Model/bebidaDAO.php';
 require_once __DIR__ . '/../Model/bebida.php';
-
-use Model\BebidaDAO;
-use Model\Bebida;
 
 class BebidaController {
     private $dao;

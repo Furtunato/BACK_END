@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../Controller/BebidaController.php';
-use Controller\BebidaController;
 
 $controller = new BebidaController();
 $bebidaEditando = null;

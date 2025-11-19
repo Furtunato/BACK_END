@@ -1,35 +1,59 @@
 <?php
-namespace Controller;
 
-require_once __DIR__ . '/../Model/bebidaDAO.php';
-require_once __DIR__ . '/../Model/bebida.php';
+class Bebida {
+    private $nome;
+    private $categoria;
+    private $volume;
+    private $valor;
+    private $qtde;
 
-use Model\BebidaDAO;
-use Model\Bebida;
-
-class bebidaController {
-    private $dao;
-
-    public function __construct() {
-        $this->dao = new BebidaDAO();
+    public function __construct($nome, $categoria, $volume, $valor, $qtde) {
+        $this->nome = $nome;
+        $this->categoria = $categoria;
+        $this->volume = $volume;
+        $this->valor = $valor;
+        $this->qtde = $qtde;
     }
 
-    public function ler() {
-        return $this->dao->lerBebidas();
+    // GETTERS
+    public function getNome() {
+        return $this->nome;
     }
 
-    public function criar($nome, $categoria, $volume, $valor, $qtde) {
-        $bebida = new Bebida($nome, $categoria, $volume, $valor, $qtde);
-        $this->dao->criarBebida($bebida);
+    public function getCategoria() {
+        return $this->categoria;
     }
 
-    public function atualizar($nome, $categoria, $volume, $valor, $qtde) {
-    $this->dao->atualizarBebida($nome, $categoria, $volume, $valor, $qtde);
+    public function getVolume() {
+        return $this->volume;
     }
 
+    public function getValor() {
+        return $this->valor;
+    }
 
-    public function deletar($nome) {
-        $this->dao->excluirBebida($nome);
+    public function getQtde() {
+        return $this->qtde;
+    }
+
+    // SETTERS
+    public function setNome($nome) {
+        $this->nome = $nome;
+    }
+
+    public function setCategoria($categoria) {
+        $this->categoria = $categoria;
+    }
+
+    public function setVolume($volume) {
+        $this->volume = $volume;
+    }
+
+    public function setValor($valor) {
+        $this->valor = $valor;
+    }
+
+    public function setQtde($qtde) {
+        $this->qtde = $qtde;
     }
 }
-?>

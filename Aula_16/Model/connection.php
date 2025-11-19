@@ -1,33 +1,32 @@
-<?php 
+<?php
 
 class Connection {
 
-    private static $instance;
-    private static function getInstance(){
+    private static $instance = null;
+        public static function getInstance(){
+            
         if (!self::$instance) {
-
             try {
                 // AJUSTE SEU USUARIO E SENHA AQUI:
                 $host = 'localhost';
-                $dbname = 'projeto_bebeidas';
+                $dbname = 'bebidas';  // Banco de dados a ser utilizado
                 $user = 'root';
                 $pass = '0719';
 
-                // CONECTA AO MYQSL
+                // CONECTA AO MYSQL
                 self::$instance = new PDO(
-                    dsn: "mysql:host=$host;charset=utf8",
-                    username: $user,
-                    password: $pass
+                    "mysql:host=$host;dbname=$dbname;charset=utf8",  // Agora conecta ao banco
+                    $user,
+                    $pass
                 );
-                self::$instance->setAttribute(attribute: PDO::ATTR_ERRMODE, value: PDO::ERRMODE_EXCEPTION);
+                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Garante que erros sejam lançados como exceções
 
-                // CRIA O BANCO DE DADOS SE NAO EXISTIR
-                self::$instance->exec(statement: "CREATE DATABASE IF NOT EXISTS $dbname CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-            
             } catch (PDOException $e) {
-                die("Erro ao conectar ao MySQL: " . $e->getMessage());
+                die("Erro ao conectar ao MySQL: " . $e->getMessage());  // Exibe a mensagem detalhada
             }
         }
         return self::$instance;
     }
 }
+
+?>
